@@ -18,12 +18,16 @@ package org.primefaces.extensions.arquillian;
 import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.context.GrapheneContext;
+import org.jboss.arquillian.graphene.proxy.GrapheneProxyInstance;
 import org.jboss.arquillian.graphene.request.RequestGuardException;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class PrimeGraphene extends Graphene {
 
@@ -176,4 +180,15 @@ public class PrimeGraphene extends Graphene {
         }
     }
 
+    public static Platform getPlatform(WebDriver driver) {
+        if (driver instanceof GrapheneProxyInstance) {
+            return getPlatform(((GrapheneProxyInstance) driver).unwrap());
+        }
+        // AndroidDriver is RemoteWebDriver
+        if (driver instanceof RemoteWebDriver) {
+            Capabilities capabilities = ((RemoteWebDriver) driver).getCapabilities();
+            return ((Platform) capabilities.getCapability("platformName"));
+        }
+        return Platform.ANY;
+    }
 }

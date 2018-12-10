@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:head>
+        <title>Components</title>
+    </h:head>
+    <h:body>
+
+        <h:form id="form" enctype="multipart/form-data">
+			<p:messages id="msgs"> <p:autoUpdate /></p:messages>
+        	<h:panelGrid columns="2" id="panel">
+        		<p:outputLabel for="password" value="password"/>
+				<p:password feedback="true" id="password"></p:password>
+			 	
+			 	<p:outputLabel for="selectbooleancheckbox" value="Select Boolean Checkbox"/>
+			 	<p:selectBooleanCheckbox id="selectbooleancheckbox" value="#{componentsController.selectBooleanCheckbox}" label="Select Boolean Checkbox" />
+            
+            	<p:outputLabel for="selectManyMenu" value="Select Many Menu"/>
+	           	<p:selectManyMenu id="selectManyMenu" value="#{componentsController.selectedManyMenu}" converter="entityConverter">
+	            	<f:selectItems value="#{componentsController.selectedManyMenuList}" var="_car" itemLabel="#{_car.name}" itemValue="#{_car}" />
+	        	</p:selectManyMenu>
+        	
+        		<p:outputLabel for="selectManyCheckbox" value="Select Many Checkbox"/>
+	        	<p:selectManyCheckbox id="selectManyCheckbox" value="#{componentsController.selectManyCheckbox}" converter="entityConverter">
+			        <f:selectItems value="#{componentsController.selectManyCheckboxList}" var="_car" itemLabel="#{_car.name}" itemValue="#{_car}" />
+			    </p:selectManyCheckbox>
+
+				<p:outputLabel for="pickList" value="Pick list"/>
+				<p:pickList id="pickList" value="#{componentsController.pickList}" converter="entityConverter" var="_car" itemLabel="#{_car.name}" itemValue="#{_car}" >
+				</p:pickList>	
+								
+				<p:outputLabel for="calendar" value="calendar"/>								
+				<p:calendar id="calendar" value="#{componentsController.calendar}" showOn="button" pattern="dd/MM/yyyy"/>
+          
+          		<p:outputLabel for="fileupload" value="File upload"/>
+          		<p:fileUpload id="fileupload" value="#{componentsController.file}" mode="simple" skinSimple="true"/>
+          	
+          		<p:outputLabel for="inplace" value="Inplace editor"/>
+	          	<p:inplace  label="inplace" effectSpeed="fast" event="dblclick" editor="true" id="inplacewrapper">
+	          	  <p:inputText value="#{componentsController.inplace}" id = "inplace"  label="text" />
+	        	</p:inplace>
+	 
+				<p:outputLabel for="autocomplete" value="Autocomplete"/>
+        		<p:autoComplete id="autocomplete" value="#{componentsController.autocomplete}"  minQueryLength="3" completeMethod="#{componentsController.autocompleteMethod}"
+                        var="_car" itemLabel="#{_car.name}" itemValue="#{_car}" converter="entityConverter" forceSelection="true" />
+        				          
+            	<p:outputLabel for="signature" value="signature "/>
+				<p:signature id="signature" style="width:400px;height:200px" widgetVar="sig" value="#{componentsController.signature}"  guideline="true"/>
+            </h:panelGrid>
+            
+     	    <p:commandButton id="open" value="show Modal" type="button" onclick="PF('dialog').show();" />
+     	    <p:dialog header="Modal Dialog" id="dialog" widgetVar="dialog" modal="true" height="100">
+			    <h:outputText value="Dialog Open." />
+			</p:dialog>
+     
+     
+            <p:commandButton id="submit" value="Submit"  ajax="false" action="#{componentsController.submit}" update="output"/>
+
+
+ 			<p:outputPanel id="output">
+ 				<p>
+ 				<h:outputText id="selectBooleanCheckboxResult" value="#{componentsController.selectBooleanCheckboxResult}" />
+ 				</p>
+ 				<p>
+ 				SelectManyMenu</p>
+ 				<p:dataTable id="selectManyMenuDatatable" rendered="#{not empty componentsController.selectManyMenuDatatable}" value="#{componentsController.selectManyMenuDatatable}" var="_car" type="ordered">
+ 				<p:column headerText="Id">
+				        <h:outputText id="id" value="#{_car.id}" />
+				    </p:column>
+				 
+				    <p:column headerText="name">
+				        <p:commandLink id="link" > <h:outputText value="#{_car.name}" /></p:commandLink>
+				    </p:column>
+				</p:dataTable>			        
+			    <p>
+ 				SelectManyCheckbox</p>
+ 				
+ 				<p:dataList id="selectManyCheckboxDatalist"  var="_car" value="#{componentsController.selectManyCheckboxDatalist}" rendered="#{not empty componentsController.selectManyCheckboxDatalist}">
+				    <f:facet name="header">
+			            SelectManyMenu
+			        </f:facet>
+			        #{_car.id}, #{_car.name}
+			
+				</p:dataList>
+ 				<p>PickList</p>
+ 				<p:dataList id="pickListDatalist" rendered="#{not empty componentsController.pickListDatalist}" value="#{componentsController.pickListDatalist}" var="_car" type="ordered">
+			        <f:facet name="header">
+			            PickList
+			        </f:facet>
+			        #{_car.id}, #{_car.name}
+			    </p:dataList>
+			    
+			     <p:tabView id="tabview">
+			        <p:tab title="Calendar fileupload" id="tab1">
+			                <p><h:outputText id="date" value="#{componentsController.calendar}" /></p>
+			                <p><h:outputText id="fileName" value="#{componentsController.fileName}" /></p>
+			        </p:tab>
+			        <p:tab title="inline, autocomplete" id="tab2">
+			        	<p><h:outputText id="inline" value="#{componentsController.inplace}" /></p>
+			            <p><h:outputText id="autocomplete" value="#{componentsController.autocomplete.name}" /></p>
+			            
+			        </p:tab>
+			        <p:tab title="Signature" id="tab3">
+			            <h:panelGrid columns="2" cellpadding="10">
+			                <p:signature id="signatureResult" style="width:400px;height:200px;" rendered="#{not empty componentsController.signature}" value="#{componentsController.signature}" readonly="true"
+								 backgroundColor="#eaeaea" color="#03a9f4"/>
+			            </h:panelGrid>
+			        </p:tab>
+			    </p:tabView>
+ 
+        
+    		</p:outputPanel>
+        </h:form>
+
+    </h:body>
+</html>

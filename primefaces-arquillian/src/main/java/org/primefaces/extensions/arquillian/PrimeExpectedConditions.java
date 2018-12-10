@@ -15,6 +15,7 @@
  */
 package org.primefaces.extensions.arquillian;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -40,5 +41,23 @@ public class PrimeExpectedConditions {
         return ExpectedConditions.and(
                 jQueryNotActive(),
                 ExpectedConditions.invisibilityOf(element));
+    }
+
+    public static ExpectedCondition<Boolean> notPresentAndAnimationComplete(WebElement element) {
+        return ExpectedConditions.and(
+                jQueryNotActive(),
+                ExpectedConditions.stalenessOf(element));
+    }
+
+    public static ExpectedCondition<Boolean> presentAndAnimationComplete(By element) {
+        return ExpectedConditions.and(
+                jQueryNotActive(),
+                ExpectedConditions.presenceOfElementLocated(element));
+    }
+
+    public static ExpectedCondition<Boolean> stalenessOfAndAnimationComplete(WebElement element) {
+        return ExpectedConditions.and(
+                jQueryNotActive(),
+                ExpectedConditions.stalenessOf(element));
     }
 }
