@@ -35,7 +35,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.embedded.EmbeddedMaven;
 import org.junit.Assert;
 import org.junit.Test;
-import org.primefaces.PrimeFaces;
 import org.primefaces.extensions.arquillian.AbstractPrimePageTest;
 
 public class ComponentsPageTest extends AbstractPrimePageTest {

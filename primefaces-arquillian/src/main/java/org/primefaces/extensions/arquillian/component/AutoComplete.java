@@ -15,9 +15,6 @@
  */
 package org.primefaces.extensions.arquillian.component;
 
-import org.primefaces.extensions.arquillian.component.base.AbstractInputComponent;
-import org.primefaces.extensions.arquillian.extension.findby.FindByParentPartialId;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.StringJoiner;
@@ -28,12 +25,12 @@ import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.graphene.request.RequestGuardException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.primefaces.extensions.arquillian.PrimeGraphene;
+import org.primefaces.extensions.arquillian.component.base.AbstractInputComponent;
+import org.primefaces.extensions.arquillian.extension.findby.FindByParentPartialId;
 
 public abstract class AutoComplete extends AbstractInputComponent {
 
