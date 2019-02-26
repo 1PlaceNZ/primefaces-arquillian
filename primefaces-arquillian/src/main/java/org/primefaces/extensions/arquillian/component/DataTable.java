@@ -55,8 +55,11 @@ public abstract class DataTable extends AbstractComponent {
         return -1;
     }
 
-    public int  getRowCount() {
+    public int getRowCount() {
         return data.findElements(By.tagName("tr")).size();
     }
 
+    public boolean isEmpty() {
+        return !data.findElements(By.className("ui-datatable-empty-message")).isEmpty();
+    }
 }
