@@ -1,5 +1,6 @@
 package org.primefaces.extensions.arquillian.component;
 
+import java.util.List;
 import java.util.function.Function;
 
 import org.jboss.arquillian.graphene.Graphene;
@@ -165,9 +166,8 @@ public abstract class PickList extends AbstractComponent {
     }
 
     public boolean isSelected(String label) {
-        Select input  = getTargetSelect();
-        for (WebElement element : input.getAllSelectedOptions()) {
-            if (element.getText().equalsIgnoreCase(label)) {
+        for (WebElement element : targetList.findElements(By.tagName("li"))) {
+            if (element.getAttribute("data-item-label").equalsIgnoreCase(label)) {
                 return true;
             }
         }
@@ -180,5 +180,21 @@ public abstract class PickList extends AbstractComponent {
 
     public int getSourceSize() {
         return sourceList.findElements(By.tagName("li")).size();
+    }
+
+    private String getLabelFromListAtIndex(WebElement list, int index) {
+        List<WebElement> items = list.findElements(By.tagName("li"));
+        if (items.size() > index) {
+            return items.get(0).getAttribute("data-item-label");
+        }
+        return null;
+    }
+
+    public String getLabelFromSourceAtIndex(int index) {
+        return getLabelFromListAtIndex(sourceList, index);
+    }
+
+    public String getLabelFromTargetAtIndex(int index) {
+        return getLabelFromListAtIndex(targetList, index);
     }
 }

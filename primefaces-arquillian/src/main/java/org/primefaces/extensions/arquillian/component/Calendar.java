@@ -47,6 +47,11 @@ public abstract class Calendar extends AbstractInputComponent {
         return PrimeGraphene.isAjaxScript(getInput().getAttribute("onchange"));
     }
 
+    @Override
+    public WebElement getInput() {
+        return root.findElement(By.id(getId() + "_input"));
+    }
+
     public String getValue() {
         return getInput().getAttribute("value");
     }
