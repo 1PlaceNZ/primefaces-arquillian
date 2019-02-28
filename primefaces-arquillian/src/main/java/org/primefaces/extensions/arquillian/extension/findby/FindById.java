@@ -27,8 +27,6 @@ import java.lang.annotation.Target;
  * Alternative {@link FindBy} annotation, which should only be used in page fragments.
  * It searches by id, starting from the parent element, based on the id of the parent concatenated with {@link #value()}.
  *
- * Sometimes, for example with <code>appendTo="..."</code>, the child element is moved to somewhere else in the DOM.
- * In this case you have to set {@link #searchFromRoot()} to <code>true</code>.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

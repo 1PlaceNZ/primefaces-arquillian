@@ -34,6 +34,7 @@ import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.arquillian.PrimeGraphene;
 import org.primefaces.extensions.arquillian.component.base.AbstractInputComponent;
 import org.primefaces.extensions.arquillian.extension.findby.FindById;
+import org.primefaces.extensions.arquillian.extension.findby.FindByParentPartialId;
 
 public abstract class Calendar extends AbstractInputComponent {
 
@@ -42,6 +43,13 @@ public abstract class Calendar extends AbstractInputComponent {
 
     @FindById(value = "ui-datepicker-div")
     private WebElement datePicker;
+
+    @FindByParentPartialId(value = "_input")
+    private WebElement inputBox;
+
+    protected WebElement getInput() {
+        return inputBox;
+    }
 
     protected boolean isOnchangeAjaxified() {
         return PrimeGraphene.isAjaxScript(getInput().getAttribute("onchange"));
