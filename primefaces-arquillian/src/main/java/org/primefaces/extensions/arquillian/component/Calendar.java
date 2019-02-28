@@ -47,17 +47,13 @@ public abstract class Calendar extends AbstractInputComponent {
     @FindByParentPartialId(value = "_input")
     private WebElement inputBox;
 
+    @Override
     protected WebElement getInput() {
         return inputBox;
     }
 
     protected boolean isOnchangeAjaxified() {
         return PrimeGraphene.isAjaxScript(getInput().getAttribute("onchange"));
-    }
-
-    @Override
-    public WebElement getInput() {
-        return root.findElement(By.id(getId() + "_input"));
     }
 
     public String getValue() {
