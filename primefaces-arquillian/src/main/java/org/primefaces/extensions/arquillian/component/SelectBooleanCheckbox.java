@@ -38,20 +38,18 @@ public abstract class SelectBooleanCheckbox extends AbstractInputComponent {
             return;
         }
         click(root);
-
-        PrimeGraphene.waitGui().until(PrimeExpectedConditions.stalenessOfAndAnimationComplete(activeOption));
+        PrimeGraphene.waitGui().until(PrimeExpectedConditions.presentAndAnimationComplete(
+               By.cssSelector(".ui-chkbox-box.ui-state-default")));
     }
-
 
     public void select() {
         if (input.isSelected()) {
             return;
         }
         click(root);
-
-        PrimeGraphene.waitGui().until(PrimeExpectedConditions.presentAndAnimationComplete(By.cssSelector(".ui-chkbox-box.ui-state-active")));
+        PrimeGraphene.waitGui().until(PrimeExpectedConditions.presentAndAnimationComplete(
+                By.cssSelector(".ui-chkbox-box.ui-state-active")));
     }
-
 
     public boolean isSelected() {
         return PrimeGraphene.isElementDisplayed(activeOption);

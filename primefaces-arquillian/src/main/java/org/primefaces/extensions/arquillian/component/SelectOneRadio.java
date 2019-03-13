@@ -15,6 +15,9 @@
  */
 package org.primefaces.extensions.arquillian.component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.request.RequestGuardException;
 import org.openqa.selenium.By;
@@ -23,26 +26,24 @@ import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.arquillian.PrimeGraphene;
 import org.primefaces.extensions.arquillian.component.base.AbstractInputComponent;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class SelectOneRadio extends AbstractInputComponent {
 
     @FindBy(css = ".ui-radiobutton")
     private List<WebElement> options;
 
-    @FindBy(css = ".ui-radiobutton.ui-state-active")
-    private WebElement activeOption;
+    private WebElement getActiveOption() {
+        return findElement(By.xpath("//table[@id='" + getId()
+                + "']//div[contains(@class, 'ui-state-active')]/parent::div"));
+    }
 
     public List<String> getOptionLabels() {
         List<String> result = new ArrayList<>();
         options.forEach((element) -> result.add(element.findElement(By.tagName("label")).getText()));
-
         return result;
     }
 
     public String getSelectedLabel() {
-        WebElement label = activeOption.findElement(By.xpath("following-sibling::label"));
+        WebElement label = getActiveOption().findElement(By.xpath("following-sibling::label"));
         return label.getText();
     }
 
@@ -51,7 +52,7 @@ public abstract class SelectOneRadio extends AbstractInputComponent {
     }
 
     public void selectNext() {
-        int activeIndex = options.indexOf(activeOption);
+        int activeIndex = options.indexOf(getActiveOption());
         int nextIndex = activeIndex + 1;
 
         if (nextIndex >= options.size()) {
@@ -62,7 +63,7 @@ public abstract class SelectOneRadio extends AbstractInputComponent {
     }
 
     public void selectPrevious() {
-        int activeIndex = options.indexOf(activeOption);
+        int activeIndex = options.indexOf(getActiveOption());
         int previousIndex = activeIndex - 1;
 
         if (previousIndex < 0) {

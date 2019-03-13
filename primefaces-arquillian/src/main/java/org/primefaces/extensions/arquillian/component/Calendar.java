@@ -17,9 +17,9 @@ package org.primefaces.extensions.arquillian.component;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -29,6 +29,7 @@ import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.request.RequestGuardException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.arquillian.PrimeGraphene;
@@ -131,11 +132,20 @@ public abstract class Calendar extends AbstractInputComponent {
         WebElement currrentYear = datePicker.findElement(By.className("ui-datepicker-year"));
         WebElement currrentMonth = datePicker.findElement(By.className("ui-datepicker-month"));
 
-        int todayYear = new Integer(currrentYear.getText());
+        int todayYear = new Integer(
+                currrentYear.findElement(By.xpath("option[@selected='selected']")).getText());
         //English months
-        int todayMonth = Month.valueOf(currrentMonth.getText().toUpperCase()).getValue();
+        String todayMonthShortName = currrentMonth.findElement(By.xpath("option[@selected='selected']")).getText();
+        try {
+            Date todayMonthDate = new SimpleDateFormat("MMM").parse(todayMonthShortName);
+            cal.setTime(todayMonthDate);
+        }
+        catch (ParseException e) {
+            throw new NoSuchElementException("Calendar's month not found: " + todayMonthShortName);
+        }
+        int todayMonth = cal.get(java.util.Calendar.MONTH);
 
-        LocalDate nowDateTime = LocalDate.of(todayYear, todayMonth, 1);
+        LocalDate nowDateTime = LocalDate.of(todayYear, todayMonth + 1, 1);
         LocalDate withDate = LocalDate.of(wishedYear, wishedMonth + 1, 1);
         long months = ChronoUnit.MONTHS.between(nowDateTime, withDate);
 
