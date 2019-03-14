@@ -102,11 +102,20 @@ public abstract class SelectOneMenu extends AbstractInputComponent {
     }
 
     public String getLabelAtIndex(int index) {
-        List<WebElement> options = items.findElements(By.tagName("li"));
-        if (options.size() > index) {
-            return options.get(0).getAttribute("data-item-label");
+        if (!panel.isDisplayed()) {
+            toggleDropdown();
         }
-        return null;
+
+        List<WebElement> options = items.findElements(By.tagName("li"));
+        String label = null;
+        if (options.size() > index) {
+            label = options.get(0).getText();
+        }
+
+        if (panel.isDisplayed()) {
+            toggleDropdown();
+        }
+        return label;
     }
 
     @Override
