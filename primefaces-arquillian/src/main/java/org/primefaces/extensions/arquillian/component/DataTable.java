@@ -56,6 +56,9 @@ public abstract class DataTable extends AbstractComponent {
     }
 
     public int getRowCount() {
+        if (isEmpty()) {
+            return 0;
+        }
         return data.findElements(By.tagName("tr")).size();
     }
 
