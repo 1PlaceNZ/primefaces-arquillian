@@ -15,6 +15,9 @@
  */
 package org.primefaces.extensions.arquillian.component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.request.RequestGuardException;
 import org.openqa.selenium.By;
@@ -116,5 +119,11 @@ public abstract class SelectOneMenu extends AbstractInputComponent {
         else {
             element.click();
         }
+    }
+
+    public List<String> getOptionLabels() {
+        List<String> result = new ArrayList<>();
+        items.findElements(By.tagName("li")).forEach((element) -> result.add(element.getText()));
+        return result;
     }
 }
