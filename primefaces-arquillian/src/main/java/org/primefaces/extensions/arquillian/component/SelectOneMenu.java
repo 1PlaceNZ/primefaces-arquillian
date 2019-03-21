@@ -15,8 +15,6 @@
  */
 package org.primefaces.extensions.arquillian.component;
 
-import java.util.List;
-
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.request.RequestGuardException;
 import org.openqa.selenium.By;
@@ -99,23 +97,6 @@ public abstract class SelectOneMenu extends AbstractInputComponent {
 
     public boolean isSelected(String label) {
         return getSelectedLabel().equalsIgnoreCase(label);
-    }
-
-    public String getLabelAtIndex(int index) {
-        if (!panel.isDisplayed()) {
-            toggleDropdown();
-        }
-
-        List<WebElement> options = items.findElements(By.tagName("li"));
-        String label = null;
-        if (options.size() > index) {
-            label = options.get(0).getText();
-        }
-
-        if (panel.isDisplayed()) {
-            toggleDropdown();
-        }
-        return label;
     }
 
     @Override

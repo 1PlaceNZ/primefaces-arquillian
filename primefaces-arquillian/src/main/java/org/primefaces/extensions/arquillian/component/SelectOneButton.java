@@ -15,15 +15,15 @@
  */
 package org.primefaces.extensions.arquillian.component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.request.RequestGuardException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.arquillian.PrimeGraphene;
 import org.primefaces.extensions.arquillian.component.base.AbstractInputComponent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class SelectOneButton extends AbstractInputComponent {
 
@@ -41,11 +41,15 @@ public abstract class SelectOneButton extends AbstractInputComponent {
     }
 
     public String getSelectedLabel() {
-        return activeOption.getText();
+        if (PrimeGraphene.isElementPresent(activeOption)) {
+            return activeOption.getText();
+        }
+        return null;
     }
 
     public boolean isSelected(String label) {
-        return getSelectedLabel().equalsIgnoreCase(label);
+        String selectedLabel = getSelectedLabel();
+        return selectedLabel != null && selectedLabel.equalsIgnoreCase(label);
     }
 
     public void selectNext() {
