@@ -32,8 +32,10 @@ public abstract class SelectOneRadio extends AbstractInputComponent {
     private List<WebElement> options;
 
     private WebElement getActiveOption() {
-        return findElement(By.xpath("//table[@id='" + getId()
-                + "']//div[contains(@class, 'ui-state-active')]/parent::div"));
+        if (PrimeGraphene.isElementPresent(By.xpath("//div[contains(@class, 'ui-state-active')]"))) {
+            return root.findElement(By.xpath("//div[contains(@class, 'ui-state-active')]/parent::div"));
+        }
+        return null;
     }
 
     public List<String> getOptionLabels() {
@@ -43,12 +45,16 @@ public abstract class SelectOneRadio extends AbstractInputComponent {
     }
 
     public String getSelectedLabel() {
-        WebElement label = getActiveOption().findElement(By.xpath("following-sibling::label"));
-        return label.getText();
+        WebElement activeOption = getActiveOption();
+        if (activeOption != null) {
+            return activeOption.findElement(By.xpath("following-sibling::label")).getText();
+        }
+        return null;
     }
 
     public boolean isSelected(String label) {
-        return getSelectedLabel().equalsIgnoreCase(label);
+        String selectedLabel = getSelectedLabel();
+        return selectedLabel != null ? selectedLabel.equalsIgnoreCase(label) : false;
     }
 
     public void selectNext() {
