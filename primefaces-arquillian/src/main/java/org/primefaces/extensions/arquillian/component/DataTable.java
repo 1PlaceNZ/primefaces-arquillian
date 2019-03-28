@@ -5,6 +5,8 @@ import java.util.List;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.primefaces.extensions.arquillian.PrimeGraphene;
 import org.primefaces.extensions.arquillian.component.base.AbstractComponent;
 import org.primefaces.extensions.arquillian.extension.findby.FindByParentPartialId;
 
@@ -18,6 +20,9 @@ public abstract class DataTable extends AbstractComponent {
 
     @FindByParentPartialId(value = "_data")
     private GrapheneElement data;
+
+    @FindBy(className = "ui-paginator-current")
+    private WebElement paginator;
 
 
     private String cellID(int rowIndex, String columnId) {
@@ -53,6 +58,16 @@ public abstract class DataTable extends AbstractComponent {
             }
         }
         return -1;
+    }
+
+    public int getTotalCount() {
+        if (PrimeGraphene.isElementPresent(paginator)) {
+            String paginatorSummary = paginator.getText();
+            String[] parts = paginatorSummary.split("\\(");
+            String digit = parts[1].replaceAll("\\D", "");
+            return Integer.valueOf(digit);
+        }
+        return getRowCount();
     }
 
     public int getRowCount() {
