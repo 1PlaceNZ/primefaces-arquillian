@@ -129,19 +129,33 @@ public abstract class Calendar extends AbstractInputComponent {
         int wishedMonth = cal.get(java.util.Calendar.MONTH);
         int wishedDay = cal.get(java.util.Calendar.DAY_OF_MONTH);
         openCalendar();
-        WebElement currrentYear = datePicker.findElement(By.className("ui-datepicker-year"));
-        WebElement currrentMonth = datePicker.findElement(By.className("ui-datepicker-month"));
+        WebElement currentYear = datePicker.findElement(By.className("ui-datepicker-year"));
+        WebElement currentMonth = datePicker.findElement(By.className("ui-datepicker-month"));
 
-        int todayYear = new Integer(
-                currrentYear.findElement(By.xpath("option[@selected='selected']")).getText());
-        //English months
-        String todayMonthShortName = currrentMonth.findElement(By.xpath("option[@selected='selected']")).getText();
+        int todayYear;
         try {
-            Date todayMonthDate = new SimpleDateFormat("MMM").parse(todayMonthShortName);
+            todayYear = new Integer(currentYear.findElement(By.xpath("option[@selected='selected']")).getText());
+        }
+        catch (NoSuchElementException e) {
+            // This calendar does not have year's drop down menu
+            todayYear = Integer.parseInt(currentYear.getText());
+        }
+
+        // English months
+        String monthName;
+        try {
+            monthName = currentMonth.findElement(By.xpath("option[@selected='selected']")).getText();
+        }
+        catch (NoSuchElementException e) {
+            // This calendar does not have month's drop down menu
+            monthName = currentMonth.getText();
+        }
+        try {
+            Date todayMonthDate = new SimpleDateFormat("MMM").parse(monthName);
             cal.setTime(todayMonthDate);
         }
         catch (ParseException e) {
-            throw new NoSuchElementException("Calendar's month not found: " + todayMonthShortName);
+            throw new NoSuchElementException("Calendar's month not found: " + monthName);
         }
         int todayMonth = cal.get(java.util.Calendar.MONTH);
 
