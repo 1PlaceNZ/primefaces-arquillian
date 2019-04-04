@@ -74,10 +74,11 @@ public abstract class DataTable extends AbstractComponent {
         if (isEmpty()) {
             return 0;
         }
-        return data.findElements(By.tagName("tr")).size();
+        return data.findElements(By.xpath("//tbody[@id = '" + data.getAttribute("id") + "']/tr")).size();
     }
 
     public boolean isEmpty() {
-        return !data.findElements(By.className("ui-datatable-empty-message")).isEmpty();
+        return !data.findElements(By.xpath("//tbody[@id = '" + data.getAttribute("id")
+                + "']/tr[contains(@class, 'ui-datatable-empty-message')]")).isEmpty();
     }
 }
