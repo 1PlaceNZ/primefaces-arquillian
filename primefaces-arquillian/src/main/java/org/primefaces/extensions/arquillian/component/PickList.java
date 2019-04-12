@@ -185,7 +185,7 @@ public abstract class PickList extends AbstractComponent {
     private String getLabelFromListAtIndex(WebElement list, int index) {
         List<WebElement> items = list.findElements(By.tagName("li"));
         if (items.size() > index) {
-            return items.get(0).getAttribute("data-item-label");
+            return items.get(index).getAttribute("data-item-label");
         }
         return null;
     }

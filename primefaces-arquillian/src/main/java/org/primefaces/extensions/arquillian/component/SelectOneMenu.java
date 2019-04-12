@@ -123,7 +123,10 @@ public abstract class SelectOneMenu extends AbstractInputComponent {
 
     public List<String> getOptionLabels() {
         List<String> result = new ArrayList<>();
-        items.findElements(By.tagName("li")).forEach((element) -> result.add(element.getText()));
+        List<WebElement> options = items.findElements(By.tagName("li"));
+        for (WebElement option : options) {
+            result.add(option.getAttribute("data-label"));
+        }
         return result;
     }
 }
