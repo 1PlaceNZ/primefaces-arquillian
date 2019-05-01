@@ -32,8 +32,8 @@ public abstract class SelectOneRadio extends AbstractInputComponent {
     private List<WebElement> options;
 
     private WebElement getActiveOption() {
-        if (PrimeGraphene.isElementPresent(By.xpath("//div[contains(@class, 'ui-state-active')]"))) {
-            return root.findElement(By.xpath("//div[contains(@class, 'ui-state-active')]/parent::div"));
+        if (PrimeGraphene.isElementPresent(By.xpath("//table[@id = '" + getId() +  "'] //div[contains(@class, 'ui-state-active')]"))) {
+            return root.findElement(By.xpath("//table[@id = '" + getId() +  "']//div[contains(@class, 'ui-state-active')]/parent::div"));
         }
         return null;
     }
@@ -47,7 +47,9 @@ public abstract class SelectOneRadio extends AbstractInputComponent {
     public String getSelectedLabel() {
         WebElement activeOption = getActiveOption();
         if (activeOption != null) {
-            return activeOption.findElement(By.xpath("following-sibling::label")).getText();
+            WebElement label = root.findElement(By.xpath("//table[@id = '" + getId() +
+                    "']//div[contains(@class, 'ui-state-active')]/parent::div/following-sibling::label"));
+            return label.getText();
         }
         return null;
     }
