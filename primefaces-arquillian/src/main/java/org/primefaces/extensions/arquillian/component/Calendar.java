@@ -129,6 +129,7 @@ public abstract class Calendar extends AbstractInputComponent {
         int wishedMonth = cal.get(java.util.Calendar.MONTH);
         int wishedDay = cal.get(java.util.Calendar.DAY_OF_MONTH);
         openCalendar();
+        PrimeGraphene.waitGui().until().element(By.className("ui-datepicker-year")).is().visible();
         WebElement currentYear = datePicker.findElement(By.className("ui-datepicker-year"));
         WebElement currentMonth = datePicker.findElement(By.className("ui-datepicker-month"));
 
