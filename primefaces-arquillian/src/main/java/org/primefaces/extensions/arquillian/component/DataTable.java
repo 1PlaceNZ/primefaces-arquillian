@@ -29,6 +29,9 @@ public abstract class DataTable extends AbstractComponent {
         return getId() + ":" + rowIndex + ":" + columnId;
     }
 
+    public By getCellBy(int rowIndex, String columnIdOrLinkId) {
+        return By.id(cellID(rowIndex, columnIdOrLinkId));
+    }
     public WebElement getWebElementInCell(int rowIndex, String columnIdOrLinkId ) {
         return driver.findElement(By.id(cellID(rowIndex, columnIdOrLinkId)));
     }
