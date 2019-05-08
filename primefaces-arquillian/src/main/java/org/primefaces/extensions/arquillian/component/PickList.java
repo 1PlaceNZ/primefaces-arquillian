@@ -174,12 +174,25 @@ public abstract class PickList extends AbstractComponent {
         return false;
     }
 
+    public boolean contains(String label) {
+        for (WebElement element : sourceList.findElements(By.tagName("li"))) {
+            if (element.getAttribute("data-item-label").equalsIgnoreCase(label)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int getTargetSize() {
         return targetList.findElements(By.tagName("li")).size();
     }
 
     public int getSourceSize() {
         return sourceList.findElements(By.tagName("li")).size();
+    }
+
+    public boolean isEmpty() {
+        return (getTargetSize() == 0 && getSourceSize() == 0);
     }
 
     private String getLabelFromListAtIndex(WebElement list, int index) {
