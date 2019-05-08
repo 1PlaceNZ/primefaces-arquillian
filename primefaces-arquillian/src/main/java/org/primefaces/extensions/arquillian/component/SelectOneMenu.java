@@ -129,4 +129,14 @@ public abstract class SelectOneMenu extends AbstractInputComponent {
         }
         return result;
     }
+
+    public boolean containOption(String optionLabel) {
+        List<WebElement> options = items.findElements(By.tagName("li"));
+        for (WebElement option : options) {
+            if (optionLabel.equals(option.getAttribute("data-label"))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
