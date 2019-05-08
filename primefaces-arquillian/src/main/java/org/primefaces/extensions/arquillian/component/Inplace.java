@@ -35,6 +35,20 @@ public abstract class Inplace extends AbstractComponent {
     @FindBy(className = "ui-inplace-cancel")
     private WebElement cancel;
 
+    @FindBy(className = "ui-inputfield")
+    private WebElement input;
+
+    @Override
+    public void clear() {
+        input.clear();
+    }
+
+    @Override
+    public void sendKeys(CharSequence... keysToSend) {
+        input.sendKeys(keysToSend);
+    }
+
+    @Override
     public void click() {
         display.click();
     }
