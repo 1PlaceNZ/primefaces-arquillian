@@ -15,6 +15,8 @@
  */
 package org.primefaces.extensions.arquillian.component;
 
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -190,6 +192,7 @@ public abstract class Calendar extends AbstractInputComponent {
     private void openCalendar() {
         if (popupButton.isDisplayed()) {
             if (!datePicker.isDisplayed()) {
+                waitGui().until().element(popupButton).is().clickable();
                 popupButton.click();
                 PrimeGraphene.waitGui().until().element(datePicker).is().visible();
             }
