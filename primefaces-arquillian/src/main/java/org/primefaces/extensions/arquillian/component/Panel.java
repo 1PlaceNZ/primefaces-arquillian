@@ -35,6 +35,9 @@ public abstract class Panel extends AbstractComponent {
     @FindBy(className = "ui-panel-content")
     private WebElement content;
 
+    @FindBy(className = "ui-dialog-titlebar-close")
+    private WebElement closeButton;
+
     public void toggle() {
         if (PrimeGraphene.hasAjaxBehavior(root, "toggle")) {
             try {
@@ -51,4 +54,9 @@ public abstract class Panel extends AbstractComponent {
         PrimeGraphene.waitGui().until(PrimeExpectedConditions.visibileAndAnimationComplete(content));
     }
 
+    public void close() {
+        if (PrimeGraphene.isElementPresent(closeButton)) {
+            closeButton.click();
+        }
+    }
 }
