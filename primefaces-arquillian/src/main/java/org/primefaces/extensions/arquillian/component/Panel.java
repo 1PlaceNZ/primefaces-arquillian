@@ -56,6 +56,7 @@ public abstract class Panel extends AbstractComponent {
 
     public void close() {
         if (PrimeGraphene.isElementPresent(closeButton)) {
+            Graphene.waitGui().until().element(closeButton).is().visible();
             closeButton.click();
         }
     }
