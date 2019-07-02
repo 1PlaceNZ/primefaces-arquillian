@@ -16,10 +16,10 @@ import org.primefaces.extensions.arquillian.extension.findby.FindByParentPartial
 
 public abstract class PickList extends AbstractComponent {
 
-    @FindBy(xpath = "//ul[contains(@class, 'ui-picklist-source')]")
+    @FindBy(className = "ui-picklist-source")
     private WebElement sourceList;
 
-    @FindBy(xpath = "//ul[contains(@class, 'ui-picklist-target')]")
+    @FindBy(className = "ui-picklist-target")
     private WebElement targetList;
 
     @FindByParentPartialId(value = "_source")
