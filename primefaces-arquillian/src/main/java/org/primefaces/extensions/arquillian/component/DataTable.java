@@ -36,6 +36,10 @@ public abstract class DataTable extends AbstractComponent {
         return driver.findElement(By.id(cellID(rowIndex, columnIdOrLinkId)));
     }
 
+    public boolean isElementExist(int rowIndex, String columnIdOrLinkId ) {
+        return driver.findElements(By.id(cellID(rowIndex, columnIdOrLinkId))).size() > 0;
+    }
+
     public String getCellText(int rowIndex, String elementId) {
         return driver.findElement(By.id(cellID(rowIndex, elementId))).getText();
     }
