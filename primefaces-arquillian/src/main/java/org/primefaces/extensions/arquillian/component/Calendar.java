@@ -22,6 +22,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -123,13 +124,21 @@ public abstract class Calendar extends AbstractInputComponent {
         }
     }
 
+    public void clickEnterDate( LocalDate  date ) {
+        clickEnterDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+    }
+
     public void clickEnterDate( Date  date ) {
         java.util.Calendar cal = new GregorianCalendar();
         cal.setTime(date);
         int wishedYear = cal.get(java.util.Calendar.YEAR);
         // month is indexed from 0!
-        int wishedMonth = cal.get(java.util.Calendar.MONTH);
+        int wishedMonth = cal.get(java.util.Calendar.MONTH) + 1;
         int wishedDay = cal.get(java.util.Calendar.DAY_OF_MONTH);
+        clickEnterDate(wishedYear,  wishedMonth,  wishedDay);
+    }
+
+    public void clickEnterDate(int wishedYear, int  wishedMonth, int wishedDay) {
         openCalendar();
         PrimeGraphene.waitGui().until().element(By.className("ui-datepicker-year")).is().visible();
         WebElement currentYear = datePicker.findElement(By.className("ui-datepicker-year"));
@@ -146,24 +155,28 @@ public abstract class Calendar extends AbstractInputComponent {
 
         // English months
         String monthName;
+        int todayMonth = LocalDate.now().getMonthValue();
         try {
             monthName = currentMonth.findElement(By.xpath("option[@selected='selected']")).getText();
+            try {
+                Date todayMonthDate = new SimpleDateFormat("MMM").parse(monthName);
+                java.util.Calendar cal = java.util.Calendar.getInstance();
+                cal.setTime(todayMonthDate);
+                todayMonth = cal.get(java.util.Calendar.MONTH) + 1;
+                //;
+            }
+            catch (ParseException e) {
+                throw new NoSuchElementException("Calendar's month not found: " + monthName);
+            }
         }
         catch (NoSuchElementException e) {
             // This calendar does not have month's drop down menu
             monthName = currentMonth.getText();
+            todayMonth =  Month.valueOf(monthName.toUpperCase()).getValue();
         }
-        try {
-            Date todayMonthDate = new SimpleDateFormat("MMM").parse(monthName);
-            cal.setTime(todayMonthDate);
-        }
-        catch (ParseException e) {
-            throw new NoSuchElementException("Calendar's month not found: " + monthName);
-        }
-        int todayMonth = cal.get(java.util.Calendar.MONTH);
 
-        LocalDate nowDateTime = LocalDate.of(todayYear, todayMonth + 1, 1);
-        LocalDate withDate = LocalDate.of(wishedYear, wishedMonth + 1, 1);
+        LocalDate nowDateTime = LocalDate.of(todayYear, todayMonth, 1);
+        LocalDate withDate = LocalDate.of(wishedYear, wishedMonth , 1);
         long months = ChronoUnit.MONTHS.between(nowDateTime, withDate);
 
         if (months > 0) {
