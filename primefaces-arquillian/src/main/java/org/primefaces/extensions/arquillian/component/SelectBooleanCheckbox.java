@@ -30,6 +30,9 @@ public abstract class SelectBooleanCheckbox extends AbstractInputComponent {
     @FindByParentPartialId(value = "_input")
     private WebElement input;
 
+    @FindBy(css = ".ui-chkbox-box")
+    private WebElement checkBox;
+
     @FindBy(css = ".ui-chkbox-box.ui-state-active")
     private WebElement activeOption;
 
@@ -37,7 +40,7 @@ public abstract class SelectBooleanCheckbox extends AbstractInputComponent {
         if (!input.isSelected()) {
             return;
         }
-        click(root);
+        click(checkBox);
         PrimeGraphene.waitGui().until(PrimeExpectedConditions.presentAndAnimationComplete(
                By.cssSelector(".ui-chkbox-box.ui-state-default")));
     }
@@ -46,7 +49,7 @@ public abstract class SelectBooleanCheckbox extends AbstractInputComponent {
         if (input.isSelected()) {
             return;
         }
-        click(root);
+        click(checkBox);
         PrimeGraphene.waitGui().until(PrimeExpectedConditions.presentAndAnimationComplete(
                 By.cssSelector(".ui-chkbox-box.ui-state-active")));
     }
