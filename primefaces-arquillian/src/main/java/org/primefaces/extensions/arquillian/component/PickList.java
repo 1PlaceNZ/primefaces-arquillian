@@ -157,11 +157,11 @@ public abstract class PickList extends AbstractComponent {
 
     }
 
-    Select getSourceSelect() {
+    public Select getSourceSelect() {
         return new Select(inputSource);
     }
 
-    Select getTargetSelect() {
+    public Select getTargetSelect() {
         return new Select(inputTarget);
     }
 
