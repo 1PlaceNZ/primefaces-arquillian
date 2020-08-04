@@ -16,6 +16,7 @@
 package org.primefaces.extensions.arquillian.example;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ import javax.inject.Named;
 
 import org.primefaces.extensions.arquillian.example.entity.Car;
 import org.primefaces.model.DualListModel;
-import org.primefaces.model.UploadedFile;
+import org.primefaces.model.file.UploadedFile;
 
 @Named
 @ViewScoped
@@ -45,6 +46,8 @@ public class ComponentsController implements Serializable {
 	 private DualListModel<Car> pickList;
 	 
 	 Date calendar;
+	 
+	 private LocalDate datePicker;
 	 
 	 String inplace;
 	 
@@ -291,5 +294,15 @@ public class ComponentsController implements Serializable {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+
+	public LocalDate getDatePicker() {
+		return datePicker;
+	}
+
+
+	public void setDatePicker(LocalDate datePicker) {
+		this.datePicker = datePicker;
 	}
 }

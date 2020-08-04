@@ -24,6 +24,7 @@ import org.primefaces.extensions.arquillian.component.Calendar;
 import org.primefaces.extensions.arquillian.component.CommandButton;
 import org.primefaces.extensions.arquillian.component.DataList;
 import org.primefaces.extensions.arquillian.component.DataTable;
+import org.primefaces.extensions.arquillian.component.DatePicker;
 import org.primefaces.extensions.arquillian.component.Dialog;
 import org.primefaces.extensions.arquillian.component.FileUpload;
 import org.primefaces.extensions.arquillian.component.Inplace;
@@ -56,6 +57,10 @@ public class ComponentsPage extends AbstractPrimePage {
     
     @FindBy(id = "form:calendar")
     private Calendar calendar;
+
+    
+    @FindBy(id = "form:datepicker")
+    private DatePicker datePicker;
     
     @FindBy(id = "form:fileupload")
     private FileUpload fileUpload;
@@ -303,6 +308,14 @@ public class ComponentsPage extends AbstractPrimePage {
 
 	public void setSignatureResult(Signature signatureResult) {
 		this.signatureResult = signatureResult;
+	}
+
+	public DatePicker getDatePicker() {
+		return datePicker;
+	}
+
+	public void setDatePicker(DatePicker datePicker) {
+		this.datePicker = datePicker;
 	}
     
 }

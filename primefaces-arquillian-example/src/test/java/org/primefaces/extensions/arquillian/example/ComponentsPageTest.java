@@ -22,9 +22,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.bcel.generic.LCONST;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Default;
 import org.jboss.arquillian.graphene.Graphene;
@@ -126,6 +128,12 @@ public class ComponentsPageTest extends AbstractPrimePageTest {
 		cal.set(Calendar.MILLISECOND, 0);
 		Date calendarDate =cal.getTime();
         components.getCalendar().clickEnterDate(calendarDate);
+        
+        LocalDate localDate = LocalDate.of(2020, 7, 8);
+        components.getDatePicker().clickEnterDate(localDate);
+        
+        assertEquals("01/07/2018",components.getCalendar().getValue());
+        assertEquals("08/07/2020",components.getDatePicker().getValue());
         
         File file = new File(this.getClass().getResource("/testfiles/test.txt").getFile());
         components.getFileUpload().selectFile(file.getAbsolutePath());

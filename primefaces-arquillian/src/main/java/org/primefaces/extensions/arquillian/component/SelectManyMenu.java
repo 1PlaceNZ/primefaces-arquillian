@@ -119,7 +119,14 @@ public abstract class SelectManyMenu extends AbstractInputComponent {
     public boolean isSelected(String label) {
         Select input  = getSelectInput();
         for (WebElement element : input.getAllSelectedOptions()) {
-            if (element.getText().equalsIgnoreCase(label)) {
+           // System.out.println(element.getTagName());
+           // System.out.println(element.getText());
+           // System.out.println(element.getAttribute("innerText"));
+           // System.out.println(element.getAttribute("innerHTML"));
+            //sometime chrome driver reutrn ""
+            if (element.getText().equalsIgnoreCase(label) ||
+                    element.getAttribute("innerText").equalsIgnoreCase(label) ||
+                    element.getAttribute("innerHTML").equalsIgnoreCase(label)) {
                 return true;
             }
         }

@@ -14,7 +14,7 @@
             <plugin>
                 <groupId>org.apache.tomee.maven</groupId>
                 <artifactId>tomee-embedded-maven-plugin</artifactId>
-                <version>7.0.5</version>
+                <version>7.0.8</version>
             </plugin>
         </plugins>
     </build>
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>6.2</version>
+            <version>8.0</version>
         </dependency>
 
         <dependency>
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>org.apache.tomee</groupId>
             <artifactId>arquillian-tomee-remote</artifactId>
-            <version>7.0.5</version>
+            <version>7.0.8</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
