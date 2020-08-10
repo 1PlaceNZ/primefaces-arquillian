@@ -90,6 +90,8 @@ public abstract class PickList extends AbstractComponent {
     }
 
     public void clickSelectAll() {
+        Graphene.waitGui().until().element(addAllButton).is().enabled();
+        Graphene.waitGui().until().element(addAllButton).is().clickable();
         addAllButton.click();
         Graphene.waitGui().until(new Function<WebDriver, Boolean>() {
             public Boolean apply(WebDriver input) {
