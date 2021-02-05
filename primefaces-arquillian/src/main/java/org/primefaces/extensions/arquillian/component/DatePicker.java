@@ -219,4 +219,9 @@ public abstract class DatePicker extends AbstractInputComponent {
             }
         }
     }
+
+    public WebElement getClearButton() {
+        WebElement button = datePicker.findElement(By.className("ui-datepicker-buttonbar")).findElement(By.className("ui-clear-button"));
+        return button;
+    }
 }
